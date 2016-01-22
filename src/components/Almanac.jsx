@@ -14,11 +14,22 @@ function clamp(n, min, max) {
   return Math.max(Math.min(n, max), min);
 }
 
-const allColors = [
-  '#EF767A', '#456990', '#49BEAA', '#49DCB1', '#EEB868', '#EF767A', '#456990',
-  '#49BEAA', '#49DCB1', '#EEB868', '#EF767A',
+const allColors = ['#97b911', '#009ee0', '#007930', '#a7d6c9', '#cd071e', '#ffed00', '#e06c9e', '#f7a800', '#972f86'];
+const contrastColors = ['black','black','white','black','white','black','black','black','white','black','black','black'];
+const icons = ['truck', 'flag-checkered', 'plus-square', 'crosshairs', 'compass', 'road', 'bar-chart', 'industry', 'money'];
+const modules = [
+	'Pick-Up & Deliver',
+	'Race',
+	'Privileges',
+	'Military',
+	'Exploration',
+	'Roads',
+	'Majorities',
+	'Production',
+	'Shares'
 ];
-const [count, width, height] = [11, 70, 90];
+
+const [count, width, height] = [12, 70, 75];
 // indexed by visual position
 const layout = range(count).map(n => {
   const row = Math.floor(n / 3);
@@ -81,7 +92,7 @@ const Almanac = React.createClass({
   render() {
     const {order, lastPress, isPressed, mouse} = this.state;
     return (
-      <div className="demo2">
+      <div className="almanac">
         {order.map((_, key) => {
           let style;
           let x;
@@ -110,15 +121,22 @@ const Almanac = React.createClass({
                 <div
                   onMouseDown={this.handleMouseDown.bind(null, key, [x, y])}
                   onTouchStart={this.handleTouchStart.bind(null, key, [x, y])}
-                  className="demo2-ball"
+                  className="protoPlanet"
+									title={modules[key]}
                   style={{
                     backgroundColor: allColors[key],
+                    color: contrastColors[key],
                     WebkitTransform: `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`,
                     transform: `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`,
                     zIndex: key === lastPress ? 99 : visualPosition,
-                    boxShadow: `${boxShadow}px 5px 5px rgba(0,0,0,0.5)`,
+                  boxShadow: `${boxShadow}px 5px 5px rgba(0,0,0,0.5)`,
+									borderWidth: visualPosition < 3 ? 3 : 1,
+									borderColor: visualPosition < 3 ? 'indianred' : 'black',
                   }}
-                />
+									>
+							 <div className={key < 9 ? "icon" : "noIcon"}>{key < 9 ? key + 1 : "x"}</div>
+							 <div><i className={"fa fa-" + icons[key]}></i></div>
+							 </div>
               }
             </Motion>
           );

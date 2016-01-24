@@ -51,7 +51,11 @@ const Almanac = React.createClass({
 					return "123";
 	},
 
-	updateOrderFromHash(order, world) {
+	getHashFromOrder(order) {
+		return order.slice(0,3).map( a => (a < 9) ? a + 1 : "x" ).reduce( (prev,curr) => prev.toString() + curr.toString() );
+	},
+
+	getOrderFromHash(order, world) {
 		const worldClean = world.split("").map((curr,indx) => curr == "x" ? indx + 9 : parseInt(curr,10) - 1);
 		let hashOrder;
 		hashOrder = reinsert(order, order.indexOf(worldClean[0]), 0);
@@ -63,7 +67,7 @@ const Almanac = React.createClass({
   handleHashChange() {
 		const {order} = this.state;
 		const updatedHash = this.validWorld(window.location.hash.substring(1,4));
-		const updatedOrder = this.updateOrderFromHash(order, updatedHash);
+		const updatedOrder = this.getOrderFromHash(order, updatedHash);
 		this.setState({order: updatedOrder, hash: updatedHash});
 	},
 	
@@ -84,7 +88,8 @@ const Almanac = React.createClass({
       const row = clamp(Math.floor(mouse[1] / height), 0, Math.floor(count / 3));
       const index = row * 3 + col;
       const newOrder = reinsert(order, order.indexOf(lastPress), index);
-      this.setState({mouse: mouse, order: newOrder});
+			const newHash = this.getHashFromOrder(newOrder);
+      this.setState({mouse: mouse, order: newOrder, hash: newHash});
     }
   },
 
@@ -153,7 +158,7 @@ const Almanac = React.createClass({
             </Motion>
           );
          })}
-						<World world={order.slice(0,3)} />
+						<World world={order.slice(0,3)} worldNo={hash} />
       </div>
     );
   },

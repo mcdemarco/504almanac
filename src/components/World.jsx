@@ -14,7 +14,7 @@ const World = React.createClass({
   getBGGLink(wN) {
 		{/*You can search for any tag.*/}
 		const link = "https://boardgamegeek.com/tag/504%3A" + wN + "/";
-		return <li><a href={link}>Search for world {wN} at BGG</a></li>;
+		return <li><a href={link}>Search for world {wN} at BoardGameGeek</a></li>;
 	},
   getRulesLink(w,wN) {
 		{/*You can only get rules for a real world (no x's).*/}
@@ -39,7 +39,11 @@ const World = React.createClass({
   render () {
 		const { world } = this.props;
 		const worldNo = this.convertToWorldNumber(world);
-		window.location.hash = worldNo;
+		if (history.pushState) {
+			history.pushState(null, null, '#' + worldNo);
+		} else {
+			location.hash = '#' + worldNo;
+		}
 		{/* was previously on the left with style marginLeft: width * 3 + 20 */}
 		return <div className="worldDetails" style={{marginTop: height * count/3 + 20}}>
 			<h1>{"World " + worldNo}</h1>

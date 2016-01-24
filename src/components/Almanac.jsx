@@ -19,12 +19,15 @@ function clamp(n, min, max) {
 
 const Almanac = React.createClass({
   getInitialState() {
+		const initOrder = range(count); // index: visual position. value: component key/id
+		const initHash = this.validWorld(window.location.hash.substring(1,4));
     return {
       mouse: [0, 0],
       delta: [0, 0], // difference between mouse and circle pos, for dragging
       lastPress: null, // key of the last pressed component
       isPressed: false,
-      order: range(count), // index: visual position. value: component key/id
+      order: initOrder,
+			hash: initHash,
     };
   },
 
@@ -36,24 +39,34 @@ const Almanac = React.createClass({
 		window.addEventListener('hashchange', this.handleHashChange);
   },
 
-  handleHashChange() {
-		const {order} = this.state;
-		const world = window.location.hash.substring(1,4);
-		let worldClean;
-		let hashOrder;
-		{/*Don't attempt to reprocess an illegal world name.*/}
-		if (world.length == 3 && /[1-9x]{3}/.test(world) && !/([1-9])\1{1,}/.test(world)) {
-			worldClean = world.split("").map((curr,indx) => curr == "x" ? indx + 9 : parseInt(curr,10) - 1);
-			hashOrder = reinsert(order, order.indexOf(worldClean[0]), 0);
-			hashOrder = reinsert(hashOrder, hashOrder.indexOf(worldClean[1]), 1);
-			hashOrder = reinsert(hashOrder, hashOrder.indexOf(worldClean[2]), 2);
-			
-			{/*Don't attempt to reprocess the same hash.*/}
-			if (order[0] != hashOrder[0] || order[1] != hashOrder[1] || order[2] != hashOrder[2])
-				this.setState({order: hashOrder});
-		};
+	validWorld(world) {
+		{/*Don't attempt to process an illegal world name:
+				require 3 digits from 1-9 or x's;
+				require no adjacent repeated digits;
+				require the first and last digit differ or be x's.
+			*/}
+		if (/[1-9x]{3}/.test(world) && !/([1-9])\1{1,}/.test(world) && (world[0] != world[2] || world[0] == "x"))
+					return world;
+		else
+					return "123";
 	},
 
+	updateOrderFromHash(order, world) {
+		const worldClean = world.split("").map((curr,indx) => curr == "x" ? indx + 9 : parseInt(curr,10) - 1);
+		let hashOrder;
+		hashOrder = reinsert(order, order.indexOf(worldClean[0]), 0);
+		hashOrder = reinsert(hashOrder, hashOrder.indexOf(worldClean[1]), 1);
+		hashOrder = reinsert(hashOrder, hashOrder.indexOf(worldClean[2]), 2);
+		return hashOrder;
+	},
+	
+  handleHashChange() {
+		const {order} = this.state;
+		const updatedHash = this.validWorld(window.location.hash.substring(1,4));
+		const updatedOrder = this.updateOrderFromHash(order, updatedHash);
+		this.setState({order: updatedOrder, hash: updatedHash});
+	},
+	
   handleTouchStart(key, pressLocation, e) {
     this.handleMouseDown(key, pressLocation, e.touches[0]);
   },
@@ -89,7 +102,7 @@ const Almanac = React.createClass({
   },
 
   render() {
-    const {order, lastPress, isPressed, mouse} = this.state;
+    const {order, lastPress, isPressed, mouse, hash} = this.state;
     return (
       <div className="almanac">
         {order.map((_, key) => {

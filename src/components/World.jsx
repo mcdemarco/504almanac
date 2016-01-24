@@ -24,9 +24,9 @@ const World = React.createClass({
 		{/*You can link to the ratings site with a real world or partial world but not a weird world (no x's followed by digits).*/}
 		const link = "http://504-2f.de/?page_id=" + links[parseInt(wN,10)];
 		if (w[0] < 9 && w[1] < 9 && w[2] < 9)
-			return <li><a href={link}>Rate world {wN} at the official site</a></li>;
+			return <li><a href={link}>Rate world {wN} at the official 504 site</a></li>;
 		else if ( (w[0] < 9 && w[1] < 9) || (w[0] < 9 && w[2] > 8)  || (w[1] > 8 && w[2] > 8) )
-			return <li><a href={link}>Look up world {wN} at the official site</a></li>;
+			return <li><a href={link}>Look up world {wN} at the official 504 site</a></li>;
 	},
 	
   render () {

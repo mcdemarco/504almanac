@@ -9,6 +9,7 @@
 body {
     font-family: Optima, Georgia, serif;
     background-color: #EEE3F6;
+    padding-bottom:18px;
 }
 
 .almanac-outer {
@@ -91,4 +92,17 @@ a:after {
     opacity: 0.6;
     /* content: " \f14c \f08e";"; */
 }
-	 
+
+footer {
+    font-family: Futura, 'Gil Sans', 'Century Gothic', 'Segoe UI', sans-serif;
+    font-size: smaller;
+    position:absolute;
+    bottom:5px;
+    text-align:center;
+    width:100%;
+    opacity: 0.4;
+}
+
+footer a:after {
+    content: "";
+}

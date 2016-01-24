@@ -4,11 +4,9 @@ import {names} from '../constants/Names';
 import {links} from '../constants/2FLinks';
 
 const World = React.createClass({
-  convertToWorldNumber(w) {
-		return w.map( a => (a < 9) ? a + 1 : "x" ).reduce( (prev,curr) => prev.toString() + curr.toString() );
-	},
+
   convertToWorldName(w) {
-		return names[0][w[0]] + " " + names[1][w[1]] + " " + names[2][w[2]];
+		return w.reduce( (prev, valu, indx) => prev + " " + names[indx][valu], "");
 	},
 	
   getBGGLink(wN) {
@@ -31,14 +29,8 @@ const World = React.createClass({
 			return <li><a href={link}>Look up world {wN} at the official site</a></li>;
 	},
 	
-	get2fLink(w) {
-		{/*This one is complicated and needs a subfunction.*/}
-		return preLink + "dummyLinkForTesting/";
-	},
-	
   render () {
-		const { world } = this.props;
-		const worldNo = this.convertToWorldNumber(world);
+		const { world, worldNo } = this.props;
 		if (history.pushState) {
 			history.pushState(null, null, '#' + worldNo);
 		} else {

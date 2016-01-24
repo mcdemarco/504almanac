@@ -52,12 +52,13 @@ div.worldDetails {
 
 h1 {
     color: indigo;
-    font-size: large;
+    font-family: Futura, 'Gil Sans', 'Century Gothic', 'Segoe UI', sans-serif;
+    font-size: x-large;
 }
 
 h2 {
     color: #4B4252;
-    font-size: medium;
+    font-size: large;
     font-style: italic;
 }
 

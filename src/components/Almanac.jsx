@@ -21,12 +21,13 @@ const Almanac = React.createClass({
   getInitialState() {
 		const initOrder = range(count); // index: visual position. value: component key/id
 		const initHash = this.validWorld(window.location.hash.substring(1,4));
+		const hashOrder = this.getOrderFromHash(initOrder,initHash);
     return {
       mouse: [0, 0],
       delta: [0, 0], // difference between mouse and circle pos, for dragging
       lastPress: null, // key of the last pressed component
       isPressed: false,
-      order: initOrder,
+      order: hashOrder,
 			hash: initHash,
     };
   },

@@ -16,6 +16,8 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     padding-bottom:18px;
+    height:100%;
+    min-height: 600px;
 }
 
 .almanac-outer {

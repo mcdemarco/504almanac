@@ -2,6 +2,7 @@ import React from 'react';
 import {height, count} from '../constants/Layout';
 import {names} from '../constants/Names';
 import {links} from '../constants/2FLinks';
+import {modules} from '../constants/Modules';
 
 const LinkList = React.createClass({
 
@@ -32,6 +33,10 @@ const World = React.createClass({
 		return w.reduce( (prev, valu, indx) => prev + " " + names[indx][valu], "");
 	},
 
+	convertToWorldModules(w) {
+		return w.reduce( (prev, valu, indx) => prev + (indx > 0 ? ", " : "") + modules[valu], "");
+	},
+
 	typeWorld(w) {
 		if (w[0] < 9 && w[1] < 9 && w[2] < 9)
 			return "full";
@@ -53,6 +58,7 @@ const World = React.createClass({
 		return <div className="worldDetails" style={{marginTop: height * count/3 + 20}}>
 			<h1>{"World " + worldNo}</h1>
 			<h2>{this.convertToWorldName(world)}</h2>
+			<h3>{this.convertToWorldModules(world)}</h3>
 			<LinkList world={world} worldNo={worldNo} worldType={worldType} />
 		</div>;
   }

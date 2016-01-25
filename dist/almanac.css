@@ -8,12 +8,18 @@
 
 body {
     font-family: Optima, Georgia, serif;
-    background-color: #EEE3F6;
+    background-color: #E4DBEB;
+    background-image:
+    linear-gradient(
+      #D6B6EE, white
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     padding-bottom:18px;
 }
 
 .almanac-outer {
-    height: 100%;
+    height: 90%;
     width: 100%;
     position: absolute;
     display: flex;
@@ -49,6 +55,7 @@ div.worldDetails {
     left:0;
     text-align:center;
     width:100%;
+    line-height: 1.4em;
 }
 
 h1 {
@@ -61,18 +68,24 @@ h2 {
     color: #4B4252;
     font-size: large;
     font-style: italic;
+    padding: 5px 0 3px 0;
 }
 
-h1, h2 {
+h3 {
+    color: #5E5862;
+    font-size: medium;
+}
+
+h1, h2, h3 {
     -webkit-user-select: text;
     -moz-user-select: text;
     user-select: text;
 }
 
-ul {
-    padding-top:10px;
-    color: indigo;
-    list-style: none;
+ul:before {
+    font-size: smaller;
+    content: "\25EF";
+    opacity: 0.6;
 }
 
 a {

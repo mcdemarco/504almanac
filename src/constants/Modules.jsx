@@ -10,5 +10,8 @@ export const modules = [
 	'Roads',
 	'Majorities',
 	'Production',
-	'Shares'
+	'Shares',
+	'____',
+	'____',
+	'____'
 ];

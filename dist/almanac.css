@@ -63,6 +63,12 @@ h2 {
     font-style: italic;
 }
 
+h1, h2 {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+}
+
 ul {
     padding-top:10px;
     color: indigo;

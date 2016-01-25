@@ -158,7 +158,7 @@ const Almanac = React.createClass({
             </Motion>
           );
          })}
-						<World world={order.slice(0,3)} worldNo={hash} />
+						<World world={order.slice(0,3)} worldNo={hash} key={hash} />
       </div>
     );
   },

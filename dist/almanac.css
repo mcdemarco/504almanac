@@ -18,6 +18,7 @@ body {
     padding-bottom:18px;
     height:100%;
     min-height: 600px;
+    overflow: auto;
 }
 
 .almanac-outer {
@@ -34,7 +35,7 @@ body {
 
 .almanac {
     width: 190px;
-    height: 400px;
+    min-height: 400px;
 }
 
 .protoPlanet {
@@ -114,14 +115,17 @@ a:after {
     /* content: " \f14c \f08e";"; */
 }
 
-footer {
+header, footer {
     font-family: Futura, 'Gil Sans', 'Century Gothic', 'Segoe UI', sans-serif;
-    font-size: smaller;
-    position:absolute;
-    bottom:5px;
     text-align:center;
     width:100%;
     opacity: 0.4;
+}
+
+footer {
+    font-size: smaller;
+    position:absolute;
+    bottom:5px;
 }
 
 footer a:after {

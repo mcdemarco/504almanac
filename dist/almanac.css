@@ -1,9 +1,10 @@
 * {
     padding: 0;
     margin: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+}
+
+html {
+    height:100%;
 }
 
 body {
@@ -15,32 +16,36 @@ body {
     );
     background-repeat: no-repeat;
     background-attachment: fixed;
-    height:100vh;
     text-align:center;
+    box-sizing: border-box;
+    display: -webkit-flex;
+    display: flex;
+    min-height: 100vh;
+    -webkit-flex-direction: column; 
+    flex-direction: column; 
 }
 
 .almanac-outer {
-    height: 90%;
     width: 100%;
-    position: absolute;
     display: -webkit-flex;
     display: flex;
+    flex: 1;
     margin: auto;
-/*    justify-content: center;
-    align-items: center; 
-    -webkit-justify-content: center;
-    -webkit-align-items: center; */
-    overflow: auto;
 }
 
 #content {
     margin: auto;
     padding: 0 18px;
+    box-sizing: content;
+    overflow: auto;
 }
 
 .almanac {
     width: 190px;
-    min-height: 500px;
+    height: 500px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 .protoPlanet {
@@ -64,6 +69,9 @@ div.worldDetails {
     text-align:center;
     width:100%;
     line-height: 1.5em;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
 }
 
 h1 {
@@ -82,12 +90,6 @@ h2 {
 h3 {
     color: #5E5862;
     font-size: medium;
-}
-
-h1, h2, h3 {
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    user-select: text;
 }
 
 ul:before {
@@ -121,30 +123,46 @@ a:after {
 }
 
 header, footer {
-    font-family: Futura, 'Gil Sans', 'Century Gothic', 'Segoe UI', sans-serif;
+     font-family: Futura, 'Gil Sans', 'Century Gothic', 'Segoe UI', sans-serif;
     text-align:center;
-    box-sizing: border-box;
     width:100%;
     margin: 0 auto;
-    padding: 5px;
+    padding: 5px 0;
 }
 
 header {
+    top:0;
     opacity: 0.4;
 }
 
 footer {
-    font-size: smaller;
-    position:absolute;
     bottom:0;
+    font-size: smaller;
     background-color: white;
+    max-height:18px;
 }
 
 footer span {
     opacity: 0.4;
+    white-space:nowrap;
 }
 
 footer a:after {
     content: "";
 }
 
+@media (pointer:coarse) {
+    /* css4 query for touchscreens and other iphone hacks */
+    div.worldDetails ul {
+	line-height:2.5em;
+    }
+
+    ul:before {
+	content: "";
+    }
+
+    .almanac {
+	height: 650px;
+    }
+
+}

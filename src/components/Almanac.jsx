@@ -1,6 +1,9 @@
 import React from 'react';
 import {Motion, spring} from 'react-motion';
 import range from 'lodash.range';
+import {allColors, contrastColors, icons, modules} from '../constants/Modules';
+import {count, width, height, layout} from '../constants/Layout';
+import World from './World';
 
 function reinsert(arr, from, to) {
   const _arr = arr.slice(0);
@@ -14,26 +17,18 @@ function clamp(n, min, max) {
   return Math.max(Math.min(n, max), min);
 }
 
-const allColors = [
-  '#EF767A', '#456990', '#49BEAA', '#49DCB1', '#EEB868', '#EF767A', '#456990',
-  '#49BEAA', '#49DCB1', '#EEB868', '#EF767A',
-];
-const [count, width, height] = [11, 70, 90];
-// indexed by visual position
-const layout = range(count).map(n => {
-  const row = Math.floor(n / 3);
-  const col = n % 3;
-  return [width * col, height * row];
-});
-
 const Almanac = React.createClass({
   getInitialState() {
+		const initOrder = range(count); // index: visual position. value: component key/id
+		const initHash = this.validWorld(window.location.hash.substring(1,4));
+		const hashOrder = this.getOrderFromHash(initOrder,initHash);
     return {
       mouse: [0, 0],
       delta: [0, 0], // difference between mouse and circle pos, for dragging
       lastPress: null, // key of the last pressed component
       isPressed: false,
-      order: range(count), // index: visual position. value: component key/id
+      order: hashOrder,
+			hash: initHash,
     };
   },
 
@@ -42,8 +37,41 @@ const Almanac = React.createClass({
     window.addEventListener('touchend', this.handleMouseUp);
     window.addEventListener('mousemove', this.handleMouseMove);
     window.addEventListener('mouseup', this.handleMouseUp);
+		window.addEventListener('hashchange', this.handleHashChange);
   },
 
+	validWorld(world) {
+		{/*Don't attempt to process an illegal world name:
+				require 3 digits from 1-9 or x's;
+				require no adjacent repeated digits;
+				require the first and last digit differ or be x's.
+			*/}
+		if (/[1-9x]{3}/.test(world) && !/([1-9])\1{1,}/.test(world) && (world[0] != world[2] || world[0] == "x"))
+					return world;
+		else
+					return "123";
+	},
+
+	getHashFromOrder(order) {
+		return order.slice(0,3).map( a => (a < 9) ? a + 1 : "x" ).reduce( (prev,curr) => prev.toString() + curr.toString() );
+	},
+
+	getOrderFromHash(order, world) {
+		const worldClean = world.split("").map((curr,indx) => curr == "x" ? indx + 9 : parseInt(curr,10) - 1);
+		let hashOrder;
+		hashOrder = reinsert(order, order.indexOf(worldClean[0]), 0);
+		hashOrder = reinsert(hashOrder, hashOrder.indexOf(worldClean[1]), 1);
+		hashOrder = reinsert(hashOrder, hashOrder.indexOf(worldClean[2]), 2);
+		return hashOrder;
+	},
+	
+  handleHashChange() {
+		const {order} = this.state;
+		const updatedHash = this.validWorld(window.location.hash.substring(1,4));
+		const updatedOrder = this.getOrderFromHash(order, updatedHash);
+		this.setState({order: updatedOrder, hash: updatedHash});
+	},
+	
   handleTouchStart(key, pressLocation, e) {
     this.handleMouseDown(key, pressLocation, e.touches[0]);
   },
@@ -61,7 +89,8 @@ const Almanac = React.createClass({
       const row = clamp(Math.floor(mouse[1] / height), 0, Math.floor(count / 3));
       const index = row * 3 + col;
       const newOrder = reinsert(order, order.indexOf(lastPress), index);
-      this.setState({mouse: mouse, order: newOrder});
+			const newHash = this.getHashFromOrder(newOrder);
+      this.setState({mouse: mouse, order: newOrder, hash: newHash});
     }
   },
 
@@ -78,10 +107,26 @@ const Almanac = React.createClass({
     this.setState({isPressed: false, delta: [0, 0]});
   },
 
+	randomize() {
+		{/* Randomize to a real world. */}
+		const {order} = this.state;
+		let newWorld;
+		let newWorldOrder;
+		newWorld = Math.floor(Math.random() * 9);
+		newWorldOrder = reinsert(order, order.indexOf(newWorld), 0);
+		newWorld = Math.floor(Math.random() * 9);
+		newWorldOrder = reinsert(newWorldOrder, newWorldOrder.indexOf(newWorld), 0);
+		newWorld = Math.floor(Math.random() * 9);
+		newWorldOrder = reinsert(newWorldOrder, newWorldOrder.indexOf(newWorld), 0);
+		const newWorldHash = this.getHashFromOrder(newWorldOrder);
+    this.setState({order: newWorldOrder, hash: newWorldHash});
+  },
+	
   render() {
-    const {order, lastPress, isPressed, mouse} = this.state;
+    const {order, lastPress, isPressed, mouse, hash} = this.state;
     return (
-      <div className="demo2">
+			<div className="worldWrapper">
+      <div className="worldDial">
         {order.map((_, key) => {
           let style;
           let x;
@@ -110,19 +155,29 @@ const Almanac = React.createClass({
                 <div
                   onMouseDown={this.handleMouseDown.bind(null, key, [x, y])}
                   onTouchStart={this.handleTouchStart.bind(null, key, [x, y])}
-                  className="demo2-ball"
+                  className="protoPlanet"
+									title={modules[key]}
                   style={{
                     backgroundColor: allColors[key],
+                    color: contrastColors[key],
                     WebkitTransform: `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`,
                     transform: `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`,
                     zIndex: key === lastPress ? 99 : visualPosition,
-                    boxShadow: `${boxShadow}px 5px 5px rgba(0,0,0,0.5)`,
+                  boxShadow: `${boxShadow}px 5px 5px rgba(0,0,0,0.5)`,
+									borderWidth: visualPosition < 3 ? 3 : 1,
+									borderColor: visualPosition < 3 ? 'indigo' : 'black',
                   }}
-                />
+									>
+							 <div className={key < 9 ? "icon" : "noIcon"}>{key < 9 ? key + 1 : "x"}</div>
+							 <div><i className={"fa fa-" + icons[key]}></i></div>
+							 </div>
               }
             </Motion>
           );
-        })}
+         })}
+			</div>
+						<div className="worldRandomizer" onClick={this.randomize}><i className="fa fa-random"></i></div>
+						<World world={order.slice(0,3)} worldNo={hash} key={hash} />
       </div>
     );
   },

@@ -3,10 +3,6 @@
     margin: 0;
 }
 
-html {
-    height:100%;
-}
-
 body {
     font-family: Optima, Georgia, serif;
     background-color: #E4DBEB;
@@ -16,36 +12,75 @@ body {
     );
     background-repeat: no-repeat;
     background-attachment: fixed;
-    text-align:center;
     box-sizing: border-box;
     display: -webkit-flex;
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
+    width: 100vw;
     -webkit-flex-direction: column; 
-    flex-direction: column; 
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
 }
 
-.almanac-outer {
-    width: 100%;
+header, footer {
+    font-family: Futura, 'Gil Sans', 'Century Gothic', 'Segoe UI', sans-serif;
+    -webkit-flex: 0 0 24px;
+    flex: 0 0 24px;
+    opacity: 0.2;
+}
+
+header {
+    /* add some spacing due to lack of support for justify-content. */
+ /*   -webkit-flex: 0 0 48px;
+    flex: 0 0 48px;
+*/}
+
+main {
+    box-sizing: content;
     display: -webkit-flex;
     display: flex;
-    flex: 1;
-    margin: auto;
+    -webkit-flex: 1 0 auto;
+    flex: 1 0 auto;
+    width: 100vw;
+    margin: 0 auto;
 }
 
-#content {
-    margin: auto;
-    padding: 0 18px;
-    box-sizing: content;
-    overflow: auto;
+.worldWrapper {
+    -webkit-flex: 1 0 auto;
+    flex: 1 0 auto;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column; 
+    flex-direction: column;
+    -webkit-align-content: center;
+    align-content: center;
 }
 
-.almanac {
+.worldDial {
+    order: 1;
+    -webkit-flex: 1 0 280px;
+    flex: 1 1 280px;
     width: 190px;
-    height: 500px;
+    height: 280px;
+    margin: 0 auto;
+    margin-bottom: 12px;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+}
+
+.worldDetails {
+    order: 2;
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+    line-height: 1.5em;
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
 }
 
 .protoPlanet {
@@ -63,17 +98,6 @@ div.noIcon {
     padding-top:20%;
 }
 
-div.worldDetails {
-    position:absolute;
-    left:0;
-    text-align:center;
-    width:100%;
-    line-height: 1.5em;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    user-select: text;
-}
-
 h1 {
     color: indigo;
     font-family: Futura, 'Gil Sans', 'Century Gothic', 'Segoe UI', sans-serif;
@@ -84,7 +108,7 @@ h2 {
     color: #4B4252;
     font-size: large;
     font-style: italic;
-    padding: 5px 0 3px 0;
+    margin: 5px 0 3px 0;
 }
 
 h3 {
@@ -92,9 +116,14 @@ h3 {
     font-size: medium;
 }
 
+ul {
+    list-style-type: none;
+}
+
 ul:before {
+    font-family: FontAwesome;
     font-size: smaller;
-    content: "\25EF";
+    content: "\f10c";
     opacity: 0.6;
 }
 
@@ -122,29 +151,8 @@ a:after {
     /* content: " \f14c \f08e";"; */
 }
 
-header, footer {
-     font-family: Futura, 'Gil Sans', 'Century Gothic', 'Segoe UI', sans-serif;
-    text-align:center;
-    width:100%;
-    margin: 0 auto;
-    padding: 5px 0;
-}
-
-header {
-    top:0;
-    opacity: 0.4;
-}
-
-footer {
-    bottom:0;
-    font-size: smaller;
-    background-color: white;
-    max-height:18px;
-}
-
-footer span {
-    opacity: 0.4;
-    white-space:nowrap;
+footer a {
+    font-weight:normal;
 }
 
 footer a:after {
@@ -161,8 +169,16 @@ footer a:after {
 	content: "";
     }
 
-    .almanac {
-	height: 650px;
+    li {
+	display: inline;
+	padding: 0 4px;
     }
 
+    body {
+	height: 500px;
+    }
+    
+    main, .worldDetails {
+	width: 100vw;
+    }
 }

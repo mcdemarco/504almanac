@@ -110,7 +110,8 @@ const Almanac = React.createClass({
   render() {
     const {order, lastPress, isPressed, mouse, hash} = this.state;
     return (
-      <div className="almanac">
+			<div className="worldWrapper">
+      <div className="worldDial">
         {order.map((_, key) => {
           let style;
           let x;
@@ -159,6 +160,7 @@ const Almanac = React.createClass({
             </Motion>
           );
          })}
+			</div>
 						<World world={order.slice(0,3)} worldNo={hash} key={hash} />
       </div>
     );

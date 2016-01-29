@@ -30,12 +30,6 @@ header, footer {
     opacity: 0.2;
 }
 
-header {
-    /* add some spacing due to lack of support for justify-content. */
- /*   -webkit-flex: 0 0 48px;
-    flex: 0 0 48px;
-*/}
-
 main {
     box-sizing: content;
     display: -webkit-flex;
@@ -47,8 +41,8 @@ main {
 }
 
 .worldWrapper {
-    -webkit-flex: 1 0 auto;
-    flex: 1 0 auto;
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column; 
@@ -59,7 +53,7 @@ main {
 
 .worldDial {
     order: 1;
-    -webkit-flex: 1 0 280px;
+    -webkit-flex: 1 1 280px;
     flex: 1 1 280px;
     width: 190px;
     height: 280px;
@@ -70,12 +64,23 @@ main {
     user-select: none;
 }
 
-.worldDetails {
+.worldRandomizer {
     order: 2;
+    -webkit-flex: 1 1 24px;
+    flex: 1 1 24px;
+    text-align: center;
+    opacity: 0.4;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.worldDetails {
+    order: 3;
     -webkit-flex: 1 1 auto;
     flex: 1 1 auto;
     line-height: 1.5em;
-    width: 90%;
+    width: 100vw;
     text-align: center;
     margin: 0 auto;
     -webkit-user-select: text;
@@ -124,7 +129,7 @@ ul:before {
     font-family: FontAwesome;
     font-size: smaller;
     content: "\f10c";
-    opacity: 0.6;
+    opacity: 0.3;
 }
 
 a {
@@ -161,10 +166,15 @@ footer a:after {
 
 @media (pointer:coarse) {
     /* css4 query for touchscreens and other iphone hacks */
-    div.worldDetails ul {
+    .worldDetails ul, .worldRandomizer {
 	line-height:2.5em;
     }
 
+    .worldRandomizer {
+	-webkit-flex: 1 1 48px;
+	flex: 1 1 48px;
+    }
+    
     ul:before {
 	content: "";
     }

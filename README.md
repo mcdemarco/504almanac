@@ -22,4 +22,5 @@ To build your own static site (requires node):
 
 * Code by M. C. DeMarco.
 * The moving bits are based on the draggable balls demo for [React Motion](https://github.com/chenglou/react-motion) by Cheng Lou.
+* Icons by Font Awesome.
 * MIT License

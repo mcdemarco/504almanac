@@ -107,6 +107,16 @@ const Almanac = React.createClass({
     this.setState({isPressed: false, delta: [0, 0]});
   },
 
+	randomize() {
+		{/* Randomize to real worlds. */}
+		const {order} = this.state;
+		const newWorld = Math.floor(Math.random() * 9);
+		const newWorldOrder = reinsert(order, order.indexOf(newWorld), 0);
+		const newWorldHash = this.getHashFromOrder(newWorldOrder);
+    this.setState({order: newWorldOrder, hash: newWorldHash});
+  },
+
+	
   render() {
     const {order, lastPress, isPressed, mouse, hash} = this.state;
     return (
@@ -161,6 +171,7 @@ const Almanac = React.createClass({
           );
          })}
 			</div>
+						<div className="worldRandomizer" onClick={this.randomize}><i className="fa fa-random"></i></div>
 						<World world={order.slice(0,3)} worldNo={hash} key={hash} />
       </div>
     );

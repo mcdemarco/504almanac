@@ -108,14 +108,19 @@ const Almanac = React.createClass({
   },
 
 	randomize() {
-		{/* Randomize to real worlds. */}
+		{/* Randomize to a real world. */}
 		const {order} = this.state;
-		const newWorld = Math.floor(Math.random() * 9);
-		const newWorldOrder = reinsert(order, order.indexOf(newWorld), 0);
+		let newWorld;
+		let newWorldOrder;
+		newWorld = Math.floor(Math.random() * 9);
+		newWorldOrder = reinsert(order, order.indexOf(newWorld), 0);
+		newWorld = Math.floor(Math.random() * 9);
+		newWorldOrder = reinsert(newWorldOrder, newWorldOrder.indexOf(newWorld), 0);
+		newWorld = Math.floor(Math.random() * 9);
+		newWorldOrder = reinsert(newWorldOrder, newWorldOrder.indexOf(newWorld), 0);
 		const newWorldHash = this.getHashFromOrder(newWorldOrder);
     this.setState({order: newWorldOrder, hash: newWorldHash});
   },
-
 	
   render() {
     const {order, lastPress, isPressed, mouse, hash} = this.state;

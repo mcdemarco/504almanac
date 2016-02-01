@@ -38,6 +38,8 @@ main {
     flex: 1 0 auto;
     width: 100vw;
     margin: 0 auto;
+    -webkit-align-items: center;
+    align-items: center;
 }
 
 .worldWrapper {
@@ -47,8 +49,8 @@ main {
     display: flex;
     -webkit-flex-direction: column; 
     flex-direction: column;
-    -webkit-align-content: center;
-    align-content: center;
+    -webkit-align-items: center;
+    align-items: center;
 }
 
 .worldDial {
@@ -66,14 +68,17 @@ main {
 
 .worldRandomizer {
     order: 2;
-    -webkit-flex: 1 1 24px;
-    flex: 1 1 24px;
-    text-align: center;
+    -webkit-flex: 1 1 50px;
+    flex: 1 1 50px;
     opacity: 0.4;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: rgba(255,255,255,0);
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
 }
 
 .worldDetails {
@@ -167,15 +172,10 @@ footer a:after {
 
 @media (pointer:coarse) {
     /* css4 query for touchscreens and other iphone hacks */
-    .worldDetails ul, .worldRandomizer {
+    .worldDetails ul {
 	line-height:2.5em;
     }
 
-    .worldRandomizer {
-	-webkit-flex: 1 1 48px;
-	flex: 1 1 48px;
-    }
-    
     ul:before {
 	content: "";
     }
@@ -192,4 +192,5 @@ footer a:after {
     main, .worldDetails {
 	width: 100vw;
     }
+
 }

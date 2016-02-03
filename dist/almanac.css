@@ -139,12 +139,15 @@ a {
 }
 
 a:hover,
-a:focus {
+a:focus,
+a:hover span,
+a:focus span {
     outline: none;
     text-decoration:underline;
 }
 
-a:visited {
+a:visited,
+a:visited span {
     color: #4B4252;
 }
 
@@ -164,9 +167,29 @@ footer a:after {
     content: "";
 }
 
+span.long {
+    display:inline-block;
+}
+
+span.short {
+    display:none;
+}
+
+
 @media (pointer:coarse) {
     /* css4 query for touchscreens; resize for iOS devices */
 
+    body {
+	/* assuming a bad processor */
+	background-color: #E4DBEB;
+	background-image:
+	linear-gradient(
+		#D6B6EE, white
+	    );
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+    }
+    
     h1 {
 	font-size: 4vw;
 	line-height: 4vw;
@@ -198,6 +221,14 @@ footer a:after {
 	padding: 0 4px;
     }
 
+    span.long {
+	display:none;
+    }
+    
+    span.short {
+	display:inline-block;
+    }
+
     main, .worldDetails {
 	width: 100vw;
     }
@@ -208,13 +239,6 @@ footer a:after {
     /* small iphone detection; hack because it won't scroll */
     body {
 	padding-bottom: 22%;
-	background-color: #E4DBEB;
-	background-image:
-	linear-gradient(
-		#D6B6EE, white
-	    );
-	background-repeat: no-repeat;
-	background-attachment: fixed;
     }
 
 }

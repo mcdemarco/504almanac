@@ -8,21 +8,24 @@ const LinkList = React.createClass({
 
   getRulesLink(wN) {
 		{/*You can only get rules for a real world (no x's).*/}
-		return <li><a href={"http://504rules.github.io/#" + wN} title="Get rules for this world at 504rules">Rules</a></li>;
+		const text = "Get rules for this world at 504rules";
+		return <li><a href={"http://504rules.github.io/#" + wN} title={text}><span className="short">Rules</span> <span className="long">{text}</span></a></li>;
 	},
 
   getRatingsLink(w,wN) {
 		{/*You can link to the ratings site with a real world or partial world but not a weird world (no x's followed by digits).*/}
 		const link = "http://504-2f.de/?page_id=" + links[parseInt(wN,10)];
-		return <li><a href={link} title="Rate this world at the official 504 site">Ratings</a></li>;
+		const text = "Rate this world at the official 504 site";
+		return <li><a href={link} title={text}><span className="short">Ratings</span> <span className="long">{text}</span></a></li>;
 	},
 	
 	render() {
 		const { world, worldNo, worldType } = this.props;
+		const bggText = "Search for this world at BoardGameGeek";
 		return <ul>
 			{worldType == "weird" ? "" : this.getRatingsLink(world, worldNo)}
 			{worldType == "full" ? this.getRulesLink(worldNo) : ""}
-			<li><a href={"https://boardgamegeek.com/tag/504%3A"  + worldNo + "/"} title="Search for this world at BoardGameGeek">BGG</a></li>
+			<li><a href={"https://boardgamegeek.com/tag/504%3A"  + worldNo + "/"} title={bggText}><span className="short">BGG</span> <span className="long">{bggText}</span></a></li>
 		</ul>;
 	}
 });

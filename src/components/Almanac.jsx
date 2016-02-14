@@ -34,10 +34,12 @@ const Almanac = React.createClass({
   },
 
   componentDidMount() {
+		{/*
 		window.addEventListener('touchmove', this.handleTouchMove);
 		window.addEventListener('touchend', this.handleMouseUp);
 		window.addEventListener('mousemove', this.handleMouseMove);
 		window.addEventListener('mouseup', this.handleMouseUp);
+				*/}
 		window.addEventListener('keydown', this.handleKeyDown);
 		window.addEventListener('hashchange', this.handleHashChange);
   },
@@ -114,12 +116,15 @@ const Almanac = React.createClass({
   },
 
   handleMouseDown(key, [pressX, pressY], {pageX, pageY}) {
+		this.dial(key);
+		{/*
     this.setState({
       lastPress: key,
       isPressed: true,
       delta: [pageX - pressX, pageY - pressY],
       mouse: [pressX, pressY],
     });
+			*/}
   },
 
   handleMouseUp() {

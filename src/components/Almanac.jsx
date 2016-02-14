@@ -75,6 +75,7 @@ const Almanac = React.createClass({
 	},
 	
   handleKeyDown(e) {
+		const {dialPosition} = this.state; 
 		const keyco = e.keyCode;
 		let number;
 		if (keyco == 82) {
@@ -83,7 +84,7 @@ const Almanac = React.createClass({
 		}	else if (keyco > 48 && keyco < 58) {
 			number = keyco - 49;
 		} else if (keyco == 88) {
-			number = 9;
+			number = 9 + dialPosition;
 		} else {
 			return;
 		}
@@ -127,12 +128,7 @@ const Almanac = React.createClass({
 
 	dial(number) {
 		const {order, dialPosition} = this.state;
-		let newOrder;
-		if (number < 9) 
-		  newOrder = reinsert(order, order.indexOf(number), dialPosition);
-		else 
-			newOrder = reinsert(order, order.indexOf(9 + dialPosition), dialPosition);
-
+		const newOrder = reinsert(order, order.indexOf(number), dialPosition);
 		const newHash = this.getHashFromOrder(newOrder);
 		const newDial = (dialPosition + 1) % 3;
 		this.setState({order: newOrder, hash: newHash, dialPosition: newDial});
@@ -164,7 +160,7 @@ const Almanac = React.createClass({
           let y;
           const visualPosition = order.indexOf(key);
           if (key === lastPress && isPressed) {
-            [x, y] = mouse;
+						[x, y] = mouse;
             style = {
               translateX: x,
               translateY: y,

@@ -76,25 +76,18 @@ const Almanac = React.createClass({
 	
   handleKeyDown(e) {
 		const keyco = e.keyCode;
+		let number;
 		if (keyco == 82) {
 			this.randomize();
 			return;
-		}
-
-		const {order, dialPosition} = this.state;
-		let newOrder;
-		if (keyco > 48 && keyco < 58) {
-			const number = keyco - 49;
-		  newOrder = reinsert(order, order.indexOf(number), dialPosition);
+		}	else if (keyco > 48 && keyco < 58) {
+			number = keyco - 49;
 		} else if (keyco == 88) {
-			newOrder = reinsert(order, order.indexOf(9 + dialPosition), dialPosition);
+			number = 9;
 		} else {
 			return;
 		}
-		const newHash = this.getHashFromOrder(newOrder);
-		const newDial = (dialPosition + 1) % 3;
-		console.log(newDial);
-		this.setState({order: newOrder, hash: newHash, dialPosition: newDial});
+		this.dial(number);
   },
 
   handleTouchStart(key, pressLocation, e) {
@@ -131,6 +124,19 @@ const Almanac = React.createClass({
   handleMouseUp() {
     this.setState({isPressed: false, delta: [0, 0]});
   },
+
+	dial(number) {
+		const {order, dialPosition} = this.state;
+		let newOrder;
+		if (number < 9) 
+		  newOrder = reinsert(order, order.indexOf(number), dialPosition);
+		else 
+			newOrder = reinsert(order, order.indexOf(9 + dialPosition), dialPosition);
+
+		const newHash = this.getHashFromOrder(newOrder);
+		const newDial = (dialPosition + 1) % 3;
+		this.setState({order: newOrder, hash: newHash, dialPosition: newDial});
+	},
 
 	randomize() {
 		{/* Randomize to a real world. */}

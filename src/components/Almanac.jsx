@@ -29,14 +29,18 @@ const Almanac = React.createClass({
       isPressed: false,
       order: hashOrder,
 			hash: initHash,
+			dialPosition: 0,
     };
   },
 
   componentDidMount() {
-    window.addEventListener('touchmove', this.handleTouchMove);
-    window.addEventListener('touchend', this.handleMouseUp);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener('mouseup', this.handleMouseUp);
+		{/*
+		window.addEventListener('touchmove', this.handleTouchMove);
+		window.addEventListener('touchend', this.handleMouseUp);
+		window.addEventListener('mousemove', this.handleMouseMove);
+		window.addEventListener('mouseup', this.handleMouseUp);
+				*/}
+		window.addEventListener('keydown', this.handleKeyDown);
 		window.addEventListener('hashchange', this.handleHashChange);
   },
 
@@ -72,6 +76,23 @@ const Almanac = React.createClass({
 		this.setState({order: updatedOrder, hash: updatedHash});
 	},
 	
+  handleKeyDown(e) {
+		const {dialPosition} = this.state; 
+		const keyco = e.keyCode;
+		let number;
+		if (keyco == 82) {
+			this.randomize();
+			return;
+		}	else if (keyco > 48 && keyco < 58) {
+			number = keyco - 49;
+		} else if (keyco == 88) {
+			number = 9 + dialPosition;
+		} else {
+			return;
+		}
+		this.dial(number);
+  },
+
   handleTouchStart(key, pressLocation, e) {
     this.handleMouseDown(key, pressLocation, e.touches[0]);
   },
@@ -95,17 +116,28 @@ const Almanac = React.createClass({
   },
 
   handleMouseDown(key, [pressX, pressY], {pageX, pageY}) {
+		this.dial(key);
+		{/*
     this.setState({
       lastPress: key,
       isPressed: true,
       delta: [pageX - pressX, pageY - pressY],
       mouse: [pressX, pressY],
     });
+			*/}
   },
 
   handleMouseUp() {
     this.setState({isPressed: false, delta: [0, 0]});
   },
+
+	dial(number) {
+		const {order, dialPosition} = this.state;
+		const newOrder = reinsert(order, order.indexOf(number), dialPosition);
+		const newHash = this.getHashFromOrder(newOrder);
+		const newDial = (dialPosition + 1) % 3;
+		this.setState({order: newOrder, hash: newHash, dialPosition: newDial});
+	},
 
 	randomize() {
 		{/* Randomize to a real world. */}
@@ -133,7 +165,7 @@ const Almanac = React.createClass({
           let y;
           const visualPosition = order.indexOf(key);
           if (key === lastPress && isPressed) {
-            [x, y] = mouse;
+						[x, y] = mouse;
             style = {
               translateX: x,
               translateY: y,

@@ -75,6 +75,10 @@ main {
     align-items: center;
 }
 
+.worldRandomizer span {
+    padding: 0 27px;
+}
+
 .worldDetails {
     order: 3;
     -webkit-flex: 1 1 auto;
@@ -125,11 +129,23 @@ ul {
     list-style-type: none;
 }
 
+/*
 ul:before {
     font-family: FontAwesome;
     font-size: smaller;
     content: "\f10c";
     opacity: 0.3;
+}
+*/
+
+ul li:first-child {
+    font-size: smaller;
+    opacity: 0.3;
+    padding:5px;
+}
+
+ul li:first-child i {
+    padding: 2px;
 }
 
 a {
@@ -157,6 +173,10 @@ a:after {
     content: " \f14c";
     opacity: 0.6;
     /* content: " \f14c \f08e";"; */
+}
+
+a.mask:after {
+    content: " ";
 }
 
 footer a {

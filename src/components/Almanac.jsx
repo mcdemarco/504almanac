@@ -3,6 +3,8 @@ import {Motion, spring} from 'react-motion';
 import range from 'lodash.range';
 import {allColors, contrastColors, icons, modules} from '../constants/Modules';
 import {count, width, height, layout} from '../constants/Layout';
+import {tags} from '../constants/Tags';
+import {ratings} from '../constants/Ratings';
 import World from './World';
 
 function reinsert(arr, from, to) {
@@ -139,9 +141,40 @@ const Almanac = React.createClass({
 		this.setState({order: newOrder, hash: newHash, dialPosition: newDial});
 	},
 
-	randomize() {
-		{/* Randomize to a real world. */}
+  bestOf() {
+		{/* Find a good world. */}
 		const {order} = this.state;
+		const newWorldOrder = this.randomizer(order);
+		const newWorldHash = this.getHashFromOrder(newWorldOrder);
+		if (!this.isGood(newWorldHash))
+			this.bestOf();
+		else
+			this.setState({order: newWorldOrder, hash: newWorldHash});
+  },
+
+	isGood(hash) {
+		{/* Check if the current world is highly rated. */}
+		return (ratings.hasOwnProperty(hash) && ratings[hash] >= 7);
+	},
+	
+  explore() {
+		{/* Explore a new world. */}
+		const {order} = this.state;
+		const newWorldOrder = this.randomizer(order);
+		const newWorldHash = this.getHashFromOrder(newWorldOrder);
+		if (this.isExplored(newWorldHash))
+			this.explore();
+		else
+			this.setState({order: newWorldOrder, hash: newWorldHash});
+  },
+
+	isExplored(hash) {
+		{/* Check if the current world is explored (has tags or votes). */}
+		return (tags.hasOwnProperty(hash) || ratings.hasOwnProperty(hash));
+	},
+	
+	randomizer(order) {
+		{/* Randomize to a real world. */}
 		let newWorld;
 		let newWorldOrder;
 		newWorld = Math.floor(Math.random() * 9);
@@ -150,6 +183,13 @@ const Almanac = React.createClass({
 		newWorldOrder = reinsert(newWorldOrder, newWorldOrder.indexOf(newWorld), 0);
 		newWorld = Math.floor(Math.random() * 9);
 		newWorldOrder = reinsert(newWorldOrder, newWorldOrder.indexOf(newWorld), 0);
+		return newWorldOrder;
+  },
+	
+	randomize() {
+		{/* Get a randomization and push to state. */}
+		const {order} = this.state;
+		const newWorldOrder = this.randomizer(order);
 		const newWorldHash = this.getHashFromOrder(newWorldOrder);
     this.setState({order: newWorldOrder, hash: newWorldHash});
   },
@@ -208,9 +248,13 @@ const Almanac = React.createClass({
           );
          })}
 			</div>
-						<div className="worldRandomizer" onClick={this.randomize}><i className="fa fa-random"></i></div>
-						<World world={order.slice(0,3)} worldNo={hash} key={hash} />
-      </div>
+			<div className="worldRandomizer">
+				<span onClick={this.bestOf} title="Highly-rated worlds"><i className="fa fa-star"></i></span>
+				<span onClick={this.randomize} title="Random worlds"><i className="fa fa-random"></i></span>
+				<span onClick={this.explore} title="Unexplored worlds"><i className="fa fa-safari"></i></span>
+			</div>
+			<World world={order.slice(0,3)} worldNo={hash} key={hash} />
+			</div>
     );
   },
 });

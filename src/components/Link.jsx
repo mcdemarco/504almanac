@@ -1,9 +1,6 @@
 import React from 'react';
 import range from 'lodash.range';
-import {height, count} from '../constants/Layout';
-import {names} from '../constants/Names';
 import {links} from '../constants/2FLinks';
-import {modules} from '../constants/Modules';
 import {ratings} from '../constants/Ratings';
 import {tags} from '../constants/Tags';
 

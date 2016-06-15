@@ -17,6 +17,22 @@ const Random = React.createClass({
 			this.switcher(newWorldOrder);
   },
 
+  worstOf() {
+		{/* Find a bad world. */}
+		const {order} = this.props;
+		const newWorldOrder = this.randomizer(order);
+		const newWorldHash = getHashFromOrder(newWorldOrder);
+		if (!this.isBad(newWorldHash))
+			this.worstOf();
+		else
+			this.switcher(newWorldOrder);
+  },
+
+	isBad(hash) {
+		{/* Check if the current world is poorly rated. */}
+		return (ratings.hasOwnProperty(hash) && ratings[hash] < 6 && ratings[hash] > 0);
+	},
+	
 	isGood(hash) {
 		{/* Check if the current world is highly rated. */}
 		return (ratings.hasOwnProperty(hash) && ratings[hash] >= 7);
@@ -37,7 +53,23 @@ const Random = React.createClass({
 		{/* Check if the current world is explored (has tags or votes). */}
 		return (tags.hasOwnProperty(hash) || ratings.hasOwnProperty(hash));
 	},
-	
+
+	tagged() {
+		{/* Find a known world. */}
+		const {order} = this.props;
+		const newWorldOrder = this.randomizer(order);
+		const newWorldHash = getHashFromOrder(newWorldOrder);
+		if (!this.isTagged(newWorldHash))
+			this.tagged();
+		else
+			this.switcher(newWorldOrder);
+  },
+
+	isTagged(hash) {
+		{/* Check if the current world has tags. */}
+		return tags.hasOwnProperty(hash);
+	},
+
 	randomizer(order) {
 		{/* Randomize to a real world. */}
 		let newWorld;
@@ -67,7 +99,9 @@ const Random = React.createClass({
     return (
 			<div className="worldRandomizer">
 				<span onClick={this.bestOf} title="Highly-rated worlds"><i className="fa fa-star"></i></span>
+				<span onClick={this.worstOf} title="Poorly-rated worlds"><i className="fa fa-star-o"></i></span>
 				<span onClick={this.randomize} title="Random worlds"><i className="fa fa-random"></i></span>
+				<span onClick={this.tagged} title="Tagged worlds"><i className="fa fa-tag"></i></span>
 				<span onClick={this.explore} title="Unexplored worlds"><i className="fa fa-safari"></i></span>
 			</div>
     );

@@ -73,7 +73,7 @@ const Almanac = React.createClass({
 		const keyco = e.keyCode;
 		let number;
 		if (keyco == 82) {
-			this.randomize();
+			this.refs.random.getNewWorld("random");
 			return;
 		}	else if (keyco > 48 && keyco < 58) {
 			number = keyco - 49;
@@ -191,7 +191,7 @@ const Almanac = React.createClass({
           );
          })}
 			</div>
-			<Random order={order} worldNo={hash} switchWorld={this.switchWorld} />
+			<Random order={order} worldNo={hash} switchWorld={this.switchWorld} ref="random"/>
 			<World world={order.slice(0,3)} worldNo={hash} key={hash} />
 			</div>
     );

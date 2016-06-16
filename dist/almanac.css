@@ -75,6 +75,10 @@ main {
     align-items: center;
 }
 
+.worldRandomizer span {
+    padding: 0 13px;
+}
+
 .worldDetails {
     order: 3;
     -webkit-flex: 1 1 auto;
@@ -125,11 +129,14 @@ ul {
     list-style-type: none;
 }
 
-ul:before {
-    font-family: FontAwesome;
+ul li:first-child {
     font-size: smaller;
-    content: "\f10c";
     opacity: 0.3;
+    padding:5px;
+}
+
+ul li:first-child i {
+    padding: 2px;
 }
 
 a {
@@ -151,12 +158,16 @@ a:visited span {
     color: #4B4252;
 }
 
-a:after {
+li a:last-child::after {
     font-family: FontAwesome;
     font-size: smaller;
     content: " \f14c";
     opacity: 0.6;
     /* content: " \f14c \f08e";"; */
+}
+
+a.mask:after {
+    content: " ";
 }
 
 footer a {
@@ -209,16 +220,16 @@ span.short {
 	line-height:2.5em;
 	font-size: 2.5vw;
 	line-height: 2.5vw;
-	padding-top:10px;
-    }
-
-    ul:before {
-	content: "";
+	padding-bottom:10px;
     }
 
     li {
 	display: inline;
 	padding: 0 4px;
+    }
+
+    li:first-child {
+	display: block;
     }
 
     span.long {

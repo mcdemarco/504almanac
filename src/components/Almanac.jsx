@@ -3,19 +3,11 @@ import {Motion, spring} from 'react-motion';
 import range from 'lodash.range';
 import {allColors, contrastColors, icons, modules} from '../constants/Modules';
 import {count, width, height, layout} from '../constants/Layout';
+import {tags} from '../constants/Tags';
+import {ratings} from '../constants/Ratings';
+import {reinsert, getHashFromOrder} from './Util';
+import Random from './Random';
 import World from './World';
-
-function reinsert(arr, from, to) {
-  const _arr = arr.slice(0);
-  const val = _arr[from];
-  _arr.splice(from, 1);
-  _arr.splice(to, 0, val);
-  return _arr;
-}
-
-function clamp(n, min, max) {
-  return Math.max(Math.min(n, max), min);
-}
 
 const Almanac = React.createClass({
   getInitialState() {
@@ -56,10 +48,6 @@ const Almanac = React.createClass({
 					return "123";
 	},
 
-	getHashFromOrder(order) {
-		return order.slice(0,3).map( a => (a < 9) ? a + 1 : "x" ).reduce( (prev,curr) => prev.toString() + curr.toString() );
-	},
-
 	getOrderFromHash(order, world) {
 		const worldClean = world.split("").map((curr,indx) => curr == "x" ? indx + 9 : parseInt(curr,10) - 1);
 		let hashOrder;
@@ -67,6 +55,10 @@ const Almanac = React.createClass({
 		hashOrder = reinsert(hashOrder, hashOrder.indexOf(worldClean[1]), 1);
 		hashOrder = reinsert(hashOrder, hashOrder.indexOf(worldClean[2]), 2);
 		return hashOrder;
+	},
+
+	clamp(n, min, max) {
+		return Math.max(Math.min(n, max), min);
 	},
 	
   handleHashChange() {
@@ -81,7 +73,7 @@ const Almanac = React.createClass({
 		const keyco = e.keyCode;
 		let number;
 		if (keyco == 82) {
-			this.randomize();
+			this.refs.random.getNewWorld("random");
 			return;
 		}	else if (keyco > 48 && keyco < 58) {
 			number = keyco - 49;
@@ -106,11 +98,11 @@ const Almanac = React.createClass({
     const {order, lastPress, isPressed, delta: [dx, dy]} = this.state;
     if (isPressed) {
       const mouse = [pageX - dx, pageY - dy];
-      const col = clamp(Math.floor(mouse[0] / width), 0, 2);
-      const row = clamp(Math.floor(mouse[1] / height), 0, Math.floor(count / 3));
+      const col = this.clamp(Math.floor(mouse[0] / width), 0, 2);
+      const row = this.clamp(Math.floor(mouse[1] / height), 0, Math.floor(count / 3));
       const index = row * 3 + col;
       const newOrder = reinsert(order, order.indexOf(lastPress), index);
-			const newHash = this.getHashFromOrder(newOrder);
+			const newHash = getHashFromOrder(newOrder);
       this.setState({mouse: mouse, order: newOrder, hash: newHash});
     }
   },
@@ -134,23 +126,14 @@ const Almanac = React.createClass({
 	dial(number) {
 		const {order, dialPosition} = this.state;
 		const newOrder = reinsert(order, order.indexOf(number), dialPosition);
-		const newHash = this.getHashFromOrder(newOrder);
+		const newHash = getHashFromOrder(newOrder);
 		const newDial = (dialPosition + 1) % 3;
 		this.setState({order: newOrder, hash: newHash, dialPosition: newDial});
 	},
 
-	randomize() {
-		{/* Randomize to a real world. */}
-		const {order} = this.state;
-		let newWorld;
-		let newWorldOrder;
-		newWorld = Math.floor(Math.random() * 9);
-		newWorldOrder = reinsert(order, order.indexOf(newWorld), 0);
-		newWorld = Math.floor(Math.random() * 9);
-		newWorldOrder = reinsert(newWorldOrder, newWorldOrder.indexOf(newWorld), 0);
-		newWorld = Math.floor(Math.random() * 9);
-		newWorldOrder = reinsert(newWorldOrder, newWorldOrder.indexOf(newWorld), 0);
-		const newWorldHash = this.getHashFromOrder(newWorldOrder);
+	switchWorld(newWorldOrder) {
+		{/* Help push to state from the Random class. */}
+		const newWorldHash = getHashFromOrder(newWorldOrder);
     this.setState({order: newWorldOrder, hash: newWorldHash});
   },
 	
@@ -208,9 +191,9 @@ const Almanac = React.createClass({
           );
          })}
 			</div>
-						<div className="worldRandomizer" onClick={this.randomize}><i className="fa fa-random"></i></div>
-						<World world={order.slice(0,3)} worldNo={hash} key={hash} />
-      </div>
+			<Random order={order} worldNo={hash} switchWorld={this.switchWorld} ref="random"/>
+			<World world={order.slice(0,3)} worldNo={hash} key={hash} />
+			</div>
     );
   },
 });

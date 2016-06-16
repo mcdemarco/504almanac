@@ -24,13 +24,14 @@ const Link = React.createClass({
 	
   getBggLink(wN,wT) {
 		{/*You can get any world from BGG.*/}
-		const link = "https://boardgamegeek.com/tag/504%3A"  + wN + "/";
+		const tagLink = "https://boardgamegeek.com/tag/504%3A"  + wN + "/";
+		const searchLink = "https://boardgamegeek.com/spsearch.php?objectid=175878&objecttype=thing&searchfield=all&displayresults=full&q=" + wN;
 		let pluralize = "this world";
 		if (wT != "full")
 			pluralize = "these worlds";
 		const text = "Search for " + pluralize + " at BoardGameGeek";
 		const tagCount = tags[wN] ? tags[wN] : 0;
-		return <li><a href={link} title={text}><span className="short">BGG</span> <span className="long">{text}</span> ({tagCount})</a></li>;
+		return <li><a href={searchLink} title={text}><span className="short">BGG</span> <span className="long">{text}</span></a> <a href={tagLink} title="Search by tag">({tagCount} <i className="fa fa-tag"></i>)</a></li>;
 	},
 
   getBggExtra(wN,m,flip) {

@@ -2,31 +2,42 @@ import React from 'react';
 import range from 'lodash.range';
 import {tags} from '../constants/Tags';
 import {ratings} from '../constants/Ratings';
+import {buttons} from '../constants/Layout';
 import {reinsert, getHashFromOrder} from './Util';
 
 const Random = React.createClass({
-	
-  bestOf() {
-		{/* Find a good world. */}
-		const {order} = this.props;
-		const newWorldOrder = this.randomizer(order);
-		const newWorldHash = getHashFromOrder(newWorldOrder);
-		if (!this.isGood(newWorldHash))
-			this.bestOf();
-		else
-			this.switcher(newWorldOrder);
-  },
 
-  worstOf() {
-		{/* Find a bad world. */}
+	getComponent(button) {
+    this.getNewWorld(button.name);
+	},
+
+	getNewWorld(ofType) {
+		{/* Find a world of the specified type. */}
 		const {order} = this.props;
 		const newWorldOrder = this.randomizer(order);
 		const newWorldHash = getHashFromOrder(newWorldOrder);
-		if (!this.isBad(newWorldHash))
-			this.worstOf();
+		if (!this.worldTest(newWorldHash,ofType))
+			this.getNewWorld(ofType);
 		else
-			this.switcher(newWorldOrder);
-  },
+			this.switcher(newWorldOrder);			
+	},
+
+	worldTest(hash,ofType) {
+		switch(ofType) {
+			case "random":
+				return true;
+			case "bestOf":
+				return this.isGood(hash);
+			case "worstOf":
+				return this.isBad(hash);
+			case "tagged":
+				return this.isTagged(hash);
+			case "unexplored":
+				return this.isUnexplored(hash);
+			default:
+				return true;
+		}
+	},
 
 	isBad(hash) {
 		{/* Check if the current world is poorly rated. */}
@@ -38,32 +49,10 @@ const Random = React.createClass({
 		return (ratings.hasOwnProperty(hash) && ratings[hash] >= 7);
 	},
 	
-  explore() {
-		{/* Explore a new world. */}
-		const {order} = this.props;
-		const newWorldOrder = this.randomizer(order);
-		const newWorldHash = getHashFromOrder(newWorldOrder);
-		if (this.isExplored(newWorldHash))
-			this.explore();
-		else
-			this.switcher(newWorldOrder);
-  },
-
-	isExplored(hash) {
+	isUnexplored(hash) {
 		{/* Check if the current world is explored (has tags or votes). */}
-		return (tags.hasOwnProperty(hash) || ratings.hasOwnProperty(hash));
+		return (!(tags.hasOwnProperty(hash) || ratings.hasOwnProperty(hash)));
 	},
-
-	tagged() {
-		{/* Find a known world. */}
-		const {order} = this.props;
-		const newWorldOrder = this.randomizer(order);
-		const newWorldHash = getHashFromOrder(newWorldOrder);
-		if (!this.isTagged(newWorldHash))
-			this.tagged();
-		else
-			this.switcher(newWorldOrder);
-  },
 
 	isTagged(hash) {
 		{/* Check if the current world has tags. */}
@@ -83,14 +72,8 @@ const Random = React.createClass({
 		return newWorldOrder;
   },
 	
-	randomize() {
-		{/* Get a randomization and push to state. */}
-		const {order} = this.props;
-		const newWorldOrder = this.randomizer(order);
-		this.switcher(newWorldOrder);
-	},
-
-	switcher(newWorldOrder) {	
+	switcher(newWorldOrder) {
+		{/* Pass new world to parent. */}
 		this.props.switchWorld(newWorldOrder);
   },
 
@@ -98,11 +81,11 @@ const Random = React.createClass({
   render() {
     return (
 			<div className="worldRandomizer">
-				<span onClick={this.bestOf} title="Highly-rated worlds"><i className="fa fa-star"></i></span>
-				<span onClick={this.worstOf} title="Poorly-rated worlds"><i className="fa fa-star-o"></i></span>
-				<span onClick={this.randomize} title="Random worlds"><i className="fa fa-random"></i></span>
-				<span onClick={this.tagged} title="Tagged worlds"><i className="fa fa-tag"></i></span>
-				<span onClick={this.explore} title="Unexplored worlds"><i className="fa fa-safari"></i></span>
+				{buttons.map(b => {
+           return(
+              <span key={b.name} title={b.title} onClick={this.getComponent.bind(this,b)}><i className={b.icon}></i></span>
+           )}
+         )}
 			</div>
     );
   },

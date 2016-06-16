@@ -25,7 +25,7 @@ const Link = React.createClass({
   getBggLink(wN,wT) {
 		{/*You can get any world from BGG.*/}
 		const tagLink = "https://boardgamegeek.com/tag/504%3A"  + wN + "/";
-		const searchLink = "https://boardgamegeek.com/spsearch.php?objectid=175878&objecttype=thing&searchfield=all&displayresults=full&q=" + wN;
+		const searchLink = "https://boardgamegeek.com/spsearch.php?objectid=175878&objecttype=thing&searchfield=all&displayresults=excerpt&q=" + wN;
 		let pluralize = "this world";
 		if (wT != "full")
 			pluralize = "these worlds";

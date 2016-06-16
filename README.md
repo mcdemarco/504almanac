@@ -8,7 +8,31 @@ If you're unfamiliar with 504 or want more details about the almanac, look here:
 
 A demo is available at http://mcdemarco.net/504almanac/
 
+To randomize with the keyboard, press `r`.
 To navigate directly to a world, e.g., 456, use:  http://mcdemarco.net/504almanac/#456
+
+## Features ##
+
+### Version 2.0 ###
+
+New in version 2.0, the Almanac incorporates some (static, local, aggregate) information about ratings and tags in order to randomize to particularly good worlds, bad worlds, discussed worlds, and as-yet unexplored worlds.  These are accessed with the button row above the world name; the center button is still a simple randomizer.
+
+BGG links now go to both a forum text search for the world (or partial world description, e.g., 12x) at [BoardGameGeek](https://boardgamegeek.com/boardgame/175878/504), and, separately, a tag search for the world there.  The tag count is included, but not necessarily up to date. 
+
+### Version 1.1.1 ###
+
+The dialer UI was changed from dragging to clicking or typing.
+
+### Version 1.1 ###
+
+Various fixes for mobile.
+
+### Version 1.0 ###
+
+The dialer brings up links individual pages for rating each world at [the official 504 website](http://504-2f.de), rules for each world at the unofficial (but adequately blessed) [rules site](http://504rules.github.io/), and a tag search for the world (or partial world description, e.g., 12x) at [BoardGameGeek](https://boardgamegeek.com/boardgame/175878/504).  All links are to off-site information.
+
+The dialer required dragging.
+
 
 ## Build ##
 

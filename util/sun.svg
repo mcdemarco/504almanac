@@ -1,0 +1,53 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'  xmlns:xlink='http://www.w3.org/1999/xlink'>
+	<radialGradient id='g' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='40%'>
+		<stop offset='0%' stop-opacity='0' stop-color='#fff' />
+		<stop offset='100%' stop-opacity='1'  stop-color='#D6B6EE' />
+	</radialGradient>
+	<radialGradient id='g2' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='40%'>
+		<stop offset='0%' stop-opacity='.1' stop-color='#fff' />
+		<stop offset='50%' stop-opacity='.5'  stop-color='#D6B6EE' />
+		<stop offset='100%' stop-opacity='.9'  stop-color='#D6B6EE' />
+	</radialGradient>
+	<rect x='0' y='0' width='110%' height='110%' fill='url(#g)'/>
+	<svg x='0' y='0' overflow='visible'>
+		<line id='l' x1='0%' x2='0' y1='0' y2='1000%' style='stroke:#fff; stroke-width:0.8;' transform='rotate(0)'/>
+		<use xlink:href='#l' transform='rotate(-2.4324324324324325)' />
+		<use xlink:href='#l' transform='rotate(-4.864864864864865)' />
+		<use xlink:href='#l' transform='rotate(-7.297297297297297)' />
+		<use xlink:href='#l' transform='rotate(-9.72972972972973)' />
+		<use xlink:href='#l' transform='rotate(-12.162162162162161)' />
+		<use xlink:href='#l' transform='rotate(-14.594594594594595)' />
+		<use xlink:href='#l' transform='rotate(-17.027027027027028)' />
+		<use xlink:href='#l' transform='rotate(-19.45945945945946)' />
+		<use xlink:href='#l' transform='rotate(-21.89189189189189)' />
+		<use xlink:href='#l' transform='rotate(-24.324324324324323)' />
+		<use xlink:href='#l' transform='rotate(-26.756756756756758)' />
+		<use xlink:href='#l' transform='rotate(-29.18918918918919)' />
+		<use xlink:href='#l' transform='rotate(-31.62162162162162)' />
+		<use xlink:href='#l' transform='rotate(-34.054054054054056)' />
+		<use xlink:href='#l' transform='rotate(-36.486486486486484)' />
+		<use xlink:href='#l' transform='rotate(-38.91891891891892)' />
+		<use xlink:href='#l' transform='rotate(-41.351351351351354)' />
+		<use xlink:href='#l' transform='rotate(-43.78378378378378)' />
+		<use xlink:href='#l' transform='rotate(-46.21621621621622)' />
+		<use xlink:href='#l' transform='rotate(-48.648648648648646)' />
+		<use xlink:href='#l' transform='rotate(-51.08108108108108)' />
+		<use xlink:href='#l' transform='rotate(-53.513513513513516)' />
+		<use xlink:href='#l' transform='rotate(-55.945945945945944)' />
+		<use xlink:href='#l' transform='rotate(-58.37837837837838)' />
+		<use xlink:href='#l' transform='rotate(-60.810810810810814)' />
+		<use xlink:href='#l' transform='rotate(-63.24324324324324)' />
+		<use xlink:href='#l' transform='rotate(-65.67567567567568)' />
+		<use xlink:href='#l' transform='rotate(-68.10810810810811)' />
+		<use xlink:href='#l' transform='rotate(-70.54054054054055)' />
+		<use xlink:href='#l' transform='rotate(-72.97297297297297)' />
+		<use xlink:href='#l' transform='rotate(-75.4054054054054)' />
+		<use xlink:href='#l' transform='rotate(-77.83783783783784)' />
+		<use xlink:href='#l' transform='rotate(-80.27027027027027)' />
+		<use xlink:href='#l' transform='rotate(-82.70270270270271)' />
+		<use xlink:href='#l' transform='rotate(-85.13513513513513)' />
+		<use xlink:href='#l' transform='rotate(-87.56756756756756)' />
+		<use xlink:href='#l' transform='rotate(-90)' />
+	</svg>
+	<rect x='0' y='0' width='110%' height='110%' fill='url(#g2)'/>
+</svg>

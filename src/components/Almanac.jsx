@@ -11,42 +11,42 @@ import World from './World';
 
 const Almanac = React.createClass({
   getInitialState() {
-		const initOrder = range(count); // index: visual position. value: component key/id
-		const initHash = this.validWorld(window.location.hash.substring(1,4));
-		const hashOrder = this.getOrderFromHash(initOrder,initHash);
+    const initOrder = range(count); // index: visual position. value: component key/id
+    const initHash = this.validWorld(window.location.hash.substring(1,4));
+    const hashOrder = this.getOrderFromHash(initOrder,initHash);
     return {
       mouse: [0, 0],
       delta: [0, 0], // difference between mouse and circle pos, for dragging
       lastPress: null, // key of the last pressed component
       isPressed: false,
       order: hashOrder,
-			hash: initHash,
-			dialPosition: 0,
+      hash: initHash,
+      dialPosition: 0,
     };
   },
 
   componentDidMount() {
-		{/*
-		window.addEventListener('touchmove', this.handleTouchMove);
-		window.addEventListener('touchend', this.handleMouseUp);
-		window.addEventListener('mousemove', this.handleMouseMove);
-		window.addEventListener('mouseup', this.handleMouseUp);
-				*/}
-		window.addEventListener('keydown', this.handleKeyDown);
-		window.addEventListener('hashchange', this.handleHashChange);
+    {/*
+	window.addEventListener('touchmove', this.handleTouchMove);
+	window.addEventListener('touchend', this.handleMouseUp);
+	window.addEventListener('mousemove', this.handleMouseMove);
+	window.addEventListener('mouseup', this.handleMouseUp);
+      */}
+    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('hashchange', this.handleHashChange);
   },
 
-	validWorld(world) {
-		{/*Don't attempt to process an illegal world name:
-				require 3 digits from 1-9 or x's;
-				require no adjacent repeated digits;
-				require the first and last digit differ or be x's.
-			*/}
-		if (/[1-9x]{3}/.test(world) && !/([1-9])\1{1,}/.test(world) && (world[0] != world[2] || world[0] == "x"))
-					return world;
-		else
-					return "123";
-	},
+  validWorld(world) {
+    {/*Don't attempt to process an illegal world name:
+	require 3 digits from 1-9 or x's;
+	require no adjacent repeated digits;
+	require the first and last digit differ or be x's.
+      */}
+    if (/[1-9x]{3}/.test(world) && !/([1-9])\1{1,}/.test(world) && (world[0] != world[2] || world[0] == "x"))
+      return world;
+    else
+      return "123";
+  },
 
 	getOrderFromHash(order, world) {
 		const worldClean = world.split("").map((curr,indx) => curr == "x" ? indx + 9 : parseInt(curr,10) - 1);

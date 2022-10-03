@@ -14,7 +14,7 @@ const Link = React.createClass({
 
   getRatingsLink(wN,wT) {
 		{/*You can link to the ratings site with a real world or partial world but not a weird world (no x's followed by digits).*/}
-		const link = "http://504-2f.de/?page_id=" + links[parseInt(wN,10)];
+		const link = "https://504.2f-spiele.de/?page_id=" + links[parseInt(wN,10)];
 		let pluralize = "this world";
 		if (wT != "full")
 			pluralize = "these worlds";

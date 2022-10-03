@@ -1,6 +1,6 @@
 {/* This object converts an xxx world number trimmed of any trailing x's
 		into the page ID at the 504-2f Wordpress site (h/t emacs rectangle mode).
-		Note that 126 is a bad link and at least 156 and 659 have link issues.
+		Note that 126 is a bad link and at least 156 and 659 have link issues (?).
 	*/}
 
 export const links = {

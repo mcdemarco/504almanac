@@ -13,6 +13,10 @@ To navigate directly to a world, e.g., 456, use:  http://mcdemarco.net/504almana
 
 ## Features ##
 
+### Version 2.0.1a ###
+
+Link fix for the official review site.  Note that BoardGameGeek has removed the tagging functionality from threads (where most 504 discussions occur) and, though there may be [a workaround](https://boardgamegeek.com/thread/2827771/article/39633053#39633053), BGG tags for worlds are therefore not up-to-date.
+
 ### Version 2.0 ###
 
 New in version 2.0, the Almanac incorporates some (static, local, aggregate) information about ratings and tags in order to randomize to particularly good worlds, bad worlds, discussed worlds, and as-yet unexplored worlds.  These are accessed with the button row above the world name; the center button is still a simple randomizer.
@@ -29,7 +33,7 @@ Various fixes for mobile.
 
 ### Version 1.0 ###
 
-The dialer brings up links individual pages for rating each world at [the official 504 website](http://504-2f.de), rules for each world at the unofficial (but adequately blessed) [rules site](http://504rules.github.io/), and a tag search for the world (or partial world description, e.g., 12x) at [BoardGameGeek](https://boardgamegeek.com/boardgame/175878/504).  All links are to off-site information.
+The dialer brings up links individual pages for rating each world at [the official 504 website](https://504.2f-spiele.de), rules for each world at the unofficial (but adequately blessed) [rules site](http://504rules.github.io/), and a tag search for the world (or partial world description, e.g., 12x) at [BoardGameGeek](https://boardgamegeek.com/boardgame/175878/504).  All links are to off-site information.
 
 The dialer required dragging.
 
@@ -38,13 +42,13 @@ The dialer required dragging.
 
 To build your own static site (requires node):
 
-1. Clone the project with Mercurial or SourceTree
+1. Clone the project
 2. cd into the repository directory at the command line
 3. `npm install`
 4. `npm run start`
 5. Open dist/index.html.
 
-Note that Chrome may object to opening index.html from the filesystem.  In that case you should serve the set of static files from a webserver, or remove the offending code (something optional having to do with the page history), or use a different browser.
+Note that Chrome may object to opening `index.html` from the filesystem.  In that case you should serve the set of static files (under `dist/`) from a webserver, or remove the offending code (something optional having to do with the page history), or use a different browser.
 
 
 ## Credits & License ##
